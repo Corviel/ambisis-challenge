@@ -1,0 +1,17 @@
+{
+  "extends": "next/core-web-vitals",
+
+  "plugins": ["@stylistic/js"],
+
+  "rules": {
+    "@stylistic/js/brace-style": [
+      "error",
+      "1tbs",
+      { "allowSingleLine": false }
+    ],
+    "@stylistic/js/object-curly-newline": [
+      "error",
+      { "multiline": true, "consistent": true }
+    ]
+  }
+}

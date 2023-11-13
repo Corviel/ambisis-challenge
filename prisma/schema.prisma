@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Company {
+  id                 Int  @id @default(autoincrement())
+
+  name               String // O equivalente em português seria "Razão Social".
+  cnpj               String @unique
+
+  cep                String
+  state              String
+  city               String
+  neighborhood       String
+  complement         String?
+
+  license            License[]
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@map("companies")
+}
+
+model License {
+  id                       Int    @id @default(autoincrement())
+  number                   String
+  environmentalAgency      String // O equivalente de "Órgão Social" em português.
+
+  emission                 DateTime
+  validity                 DateTime
+
+  company                  Company? @relation(fields: [companyId], references: [id])
+  companyId                Int?
+
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+
+  @@map("licenses")
+}
